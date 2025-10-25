@@ -17,7 +17,23 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
       className="min-h-screen bg-gradient-to-b from-[#FFFBEA] to-white flex flex-col items-center justify-center px-6"
     >
       <div className="flex flex-col items-center max-w-md w-full">
-        {/* Animated QR Icon */}
+        {/* Halal Shack Logo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="mb-8"
+        >
+          <div className="bg-white rounded-3xl p-6 shadow-lg">
+            <img 
+              src="/menupro-logo.svg" 
+              alt="Halal Shack Logo" 
+              className="h-24 w-auto mx-auto"
+            />
+          </div>
+        </motion.div>
+
+        {/* Animated QR Code */}
         <motion.div
           animate={{
             scale: [1, 1.05, 1],
@@ -34,8 +50,19 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
           }}
           className="mb-12"
         >
-          <div className="bg-white rounded-3xl p-8 shadow-lg">
-            <QrCode className="w-32 h-32 text-[#F97316]" strokeWidth={1.5} />
+          <div className="bg-white rounded-3xl p-8 shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300">
+            <a 
+              href="https://halalshack-menuos.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent('https://halalshack-menuos.vercel.app/')}`}
+                alt="QR Code to MenuOS - Click to open"
+                className="w-32 h-32 mx-auto"
+              />
+            </a>
           </div>
         </motion.div>
 
@@ -54,16 +81,29 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-center text-[#1C1C1E]/70 mb-12 max-w-sm"
+          className="text-center text-[#1C1C1E]/70 mb-4 max-w-sm"
         >
           No app needed — scan, browse, and order instantly.
         </motion.p>
+
+        {/* URL Display */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-center mb-8"
+        >
+          <p className="text-[#1C1C1E]/50 text-sm mb-2">Visit our digital menu at:</p>
+          <p className="text-[#F97316] font-mono text-sm bg-gray-100 px-3 py-2 rounded-lg">
+            https://halalshack-menuos.vercel.app/
+          </p>
+        </motion.div>
 
         {/* CTA Button */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.5 }}
           className="w-full"
         >
           <Button
@@ -79,7 +119,7 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.7 }}
           className="mt-16 flex flex-col items-center justify-center space-y-3"
         >
           <img 
