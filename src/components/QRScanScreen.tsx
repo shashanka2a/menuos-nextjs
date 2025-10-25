@@ -33,7 +33,7 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
           </div>
         </motion.div>
 
-        {/* Animated QR Code */}
+        {/* Animated QR Icon */}
         <motion.div
           animate={{
             scale: [1, 1.05, 1],
@@ -57,11 +57,7 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
               rel="noopener noreferrer"
               className="block"
             >
-              <img 
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent('https://halalshack-menuos.vercel.app/')}`}
-                alt="QR Code to MenuOS - Click to open"
-                className="w-32 h-32 mx-auto"
-              />
+              <QrCode className="w-32 h-32 text-[#F97316] mx-auto" strokeWidth={1.5} />
             </a>
           </div>
         </motion.div>
