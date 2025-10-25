@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Search, ShoppingCart } from "lucide-react";
-import { Input } from "./ui/input";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
@@ -13,6 +12,7 @@ interface MenuItem {
   name: string;
   image: string;
   category: string;
+  allergies: string[];
 }
 
 interface MenuScreenProps {
@@ -32,48 +32,64 @@ const categories = [
   "Hummus Bowl",
 ];
 
+const allergyOptions = [
+  "Gluten-Free",
+  "Dairy-Free",
+  "Nut-Free",
+  "Vegan",
+  "Vegetarian",
+  "Soy-Free",
+];
+
 const menuItems: MenuItem[] = [
   {
     id: "1",
     name: "Rice Bowl",
     image: "/ricebowl.png",
     category: "Rice Bowl",
+    allergies: ["Gluten-Free", "Vegan", "Vegetarian"],
   },
   {
     id: "2",
     name: "Salad Bowl",
     image: "/saladbowl.png",
     category: "Salad Bowl",
+    allergies: ["Gluten-Free", "Vegan", "Vegetarian"],
   },
   {
     id: "3",
     name: "Fries Bowl",
     image: "/friesbowl.png",
     category: "Fries Bowl",
+    allergies: ["Vegetarian"],
   },
   {
     id: "4",
     name: "Naanarito",
     image: "/naanarito.png",
     category: "Naanarito",
+    allergies: ["Vegetarian"],
   },
   {
     id: "5",
     name: "Pita Wrap",
     image: "/pitawrap.png",
     category: "Pita Wrap",
+    allergies: ["Vegetarian"],
   },
   {
     id: "6",
     name: "Naanadilla",
     image: "/naanadilla.png",
     category: "Naanadilla",
+    allergies: ["Vegetarian"],
   },
   {
     id: "7",
     name: "Hummus Bowl",
     image: "/hummus.png",
     category: "Hummus Bowl",
+    allergies: ["Gluten-Free", "Vegan", "Vegetarian", "Nut-Free"],
   },
 ];
 
@@ -84,6 +100,24 @@ export function MenuScreen({
   onViewCart,
 }: MenuScreenProps) {
   const [selectedCategory, setSelectedCategory] = useState("Rice Bowl");
+  const [selectedAllergies, setSelectedAllergies] = useState<string[]>([]);
+
+  // Toggle allergy filter
+  const toggleAllergyFilter = (allergy: string) => {
+    setSelectedAllergies(prev => 
+      prev.includes(allergy) 
+        ? prev.filter(a => a !== allergy)
+        : [...prev, allergy]
+    );
+  };
+
+  // Filter menu items based on selected category and allergies
+  const filteredMenuItems = menuItems.filter(item => {
+    const categoryMatch = item.category === selectedCategory;
+    const allergyMatch = selectedAllergies.length === 0 || 
+      selectedAllergies.some(allergy => item.allergies.includes(allergy));
+    return categoryMatch && allergyMatch;
+  });
 
   return (
     <motion.div
@@ -111,13 +145,24 @@ export function MenuScreen({
           Build your own bowls or wraps — start with a style.
         </p>
 
-        {/* Search Bar */}
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#1C1C1E]/40" />
-          <Input
-            placeholder="Search items or filter by allergies"
-            className="pl-12 h-12 rounded-full bg-gray-50 border-0"
-          />
+        {/* Allergy Filters */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-medium text-[#1C1C1E]">Filter by Allergies</h3>
+          <div className="flex flex-wrap gap-2">
+            {allergyOptions.map((allergy) => (
+              <button
+                key={allergy}
+                onClick={() => toggleAllergyFilter(allergy)}
+                className={`px-3 py-2 rounded-full text-sm transition-all ${
+                  selectedAllergies.includes(allergy)
+                    ? "bg-red-100 text-red-700 border-2 border-red-200"
+                    : "bg-gray-100 text-gray-700 border-2 border-gray-200 hover:border-red-300"
+                }`}
+              >
+                {allergy}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -149,12 +194,14 @@ export function MenuScreen({
 
       {/* Menu Grid */}
       <div className="px-4 grid grid-cols-2 gap-4">
-        {menuItems.map((item, index) => (
+        <AnimatePresence mode="wait">
+          {filteredMenuItems.map((item, index) => (
           <motion.div
-            key={item.id}
+            key={`${item.id}-${selectedCategory}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 + index * 0.05 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ delay: 0.1 + index * 0.05, duration: 0.3 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => onSelectItem(item)}
             className="bg-[#1C1C1E] rounded-2xl overflow-hidden cursor-pointer"
@@ -179,6 +226,7 @@ export function MenuScreen({
             </div>
           </motion.div>
         ))}
+        </AnimatePresence>
       </div>
 
       {/* Floating Cart Button */}
