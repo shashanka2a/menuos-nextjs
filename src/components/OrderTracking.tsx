@@ -29,7 +29,7 @@ const orderSteps = [
   {
     id: 3,
     title: "Ready",
-    description: "Order ready for pickup",
+    description: "Order ready to be served",
     icon: Clock,
     status: "pending" as const,
     time: "~8 mins",
