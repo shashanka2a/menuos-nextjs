@@ -75,18 +75,19 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
           </Button>
         </motion.div>
 
-        {/* MenuPro Logo */}
+        {/* MenuOS Branding */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-16 flex items-center justify-center"
+          className="mt-16 flex flex-col items-center justify-center space-y-3"
         >
           <img 
             src="/menupro-logo.svg" 
-            alt="MenuPro Logo" 
-            className="h-8 w-auto"
+            alt="MenuOS Logo" 
+            className="h-12 w-auto"
           />
+          <h2 className="text-[#1C1C1E] text-lg font-semibold">MenuOS</h2>
         </motion.div>
       </div>
     </motion.div>
