@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, CreditCard, Apple } from "lucide-react";
+import { ChevronLeft, CreditCard, Apple, Smartphone } from "lucide-react";
 import { Button } from "./ui/button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
@@ -155,8 +155,9 @@ export function CartCheckout({
               >
                 <div className="flex items-center space-x-3">
                   <RadioGroupItem value="google-pay" id="google-pay" />
-                  <Label htmlFor="google-pay" className="cursor-pointer">
-                    Google Pay
+                  <Label htmlFor="google-pay" className="cursor-pointer flex items-center gap-2">
+                    <Smartphone className="w-5 h-5" />
+                    <span>Google Pay</span>
                   </Label>
                 </div>
               </div>

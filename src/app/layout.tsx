@@ -13,17 +13,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MenuPro - Restaurant Ordering System",
+  title: "MenuOS - Restaurant Ordering System",
   description: "Discover deliciousness with our modern restaurant ordering system. Scan, browse, and order instantly.",
   keywords: ["restaurant", "ordering", "menu", "food", "delivery", "dining"],
-  authors: [{ name: "MenuPro Team" }],
+  authors: [{ name: "MenuOS Team" }],
   icons: {
     icon: "/menupro-logo.svg",
     shortcut: "/menupro-logo.svg",
     apple: "/menupro-logo.svg",
   },
   openGraph: {
-    title: "MenuPro - Restaurant Ordering System",
+    title: "MenuOS - Restaurant Ordering System",
     description: "Discover deliciousness with our modern restaurant ordering system. Scan, browse, and order instantly.",
     type: "website",
     locale: "en_US",
@@ -32,13 +32,13 @@ export const metadata: Metadata = {
         url: "/menupro-logo.svg",
         width: 198,
         height: 191,
-        alt: "MenuPro Logo",
+        alt: "MenuOS Logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MenuPro - Restaurant Ordering System",
+    title: "MenuOS - Restaurant Ordering System",
     description: "Discover deliciousness with our modern restaurant ordering system. Scan, browse, and order instantly.",
     images: ["/menupro-logo.svg"],
   },
