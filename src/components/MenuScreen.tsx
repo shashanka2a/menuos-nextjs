@@ -129,45 +129,77 @@ export function MenuScreen({
     >
       {/* Header */}
       <div className="sticky top-0 bg-white z-10 px-4 pt-4 sm:pt-6 pb-4 border-b border-gray-100">
-        {/* MenuPro Logo */}
-        <div className="flex justify-center mb-3 sm:mb-4">
-          <img 
-            src="/menupro-logo.svg" 
-            alt="MenuPro Logo" 
-            className="h-8 sm:h-10 w-auto"
-          />
-        </div>
-        
-        <h1 className="text-center mb-2 text-[#1C1C1E] text-lg sm:text-xl font-semibold">
-          Discover Deliciousness 🍛
-        </h1>
-        <p className="text-center text-[#1C1C1E]/70 mb-4 text-sm sm:text-base">
-          Build your own bowls or wraps — start with a style.
-        </p>
+        <div className="max-w-6xl mx-auto">
+          {/* MenuPro Logo */}
+          <div className="flex justify-center mb-3 sm:mb-4">
+            <img 
+              src="/menupro-logo.svg" 
+              alt="MenuPro Logo" 
+              className="h-8 sm:h-10 w-auto"
+            />
+          </div>
+          
+          <h1 className="text-center mb-2 text-[#1C1C1E] text-lg sm:text-xl font-semibold">
+            Discover Deliciousness 🍛
+          </h1>
+          <p className="text-center text-[#1C1C1E]/70 mb-6 text-sm sm:text-base">
+            Build your own bowls or wraps — start with a style.
+          </p>
 
-        {/* Allergy Filters */}
-        <div className="space-y-3">
-          <h3 className="text-xs sm:text-sm font-medium text-[#1C1C1E]">Filter by Allergies</h3>
-          <div className="flex flex-wrap gap-2">
-            {allergyOptions.map((allergy) => (
-              <button
-                key={allergy}
-                onClick={() => toggleAllergyFilter(allergy)}
-                className={`px-2 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm transition-all ${
-                  selectedAllergies.includes(allergy)
-                    ? "bg-red-100 text-red-700 border-2 border-red-200"
-                    : "bg-gray-100 text-gray-700 border-2 border-gray-200 hover:border-red-300"
-                }`}
-              >
-                {allergy}
-              </button>
-            ))}
+          {/* Desktop Layout: Side by side filters and categories */}
+          <div className="lg:flex lg:items-start lg:gap-8">
+            {/* Allergy Filters */}
+            <div className="space-y-3 lg:flex-1">
+              <h3 className="text-xs sm:text-sm font-medium text-[#1C1C1E]">Filter by Allergies</h3>
+              <div className="flex flex-wrap gap-2">
+                {allergyOptions.map((allergy) => (
+                  <button
+                    key={allergy}
+                    onClick={() => toggleAllergyFilter(allergy)}
+                    className={`px-2 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm transition-all ${
+                      selectedAllergies.includes(allergy)
+                        ? "bg-red-100 text-red-700 border-2 border-red-200"
+                        : "bg-gray-100 text-gray-700 border-2 border-gray-200 hover:border-red-300"
+                    }`}
+                  >
+                    {allergy}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Category Tabs - Desktop */}
+            <div className="hidden lg:block lg:flex-1">
+              <h3 className="text-sm font-medium text-[#1C1C1E] mb-3">Categories</h3>
+              <div className="flex flex-wrap gap-2">
+                {categories.map((category, index) => (
+                  <motion.div
+                    key={category}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Badge
+                      onClick={() => setSelectedCategory(category)}
+                      variant={selectedCategory === category ? "default" : "outline"}
+                      className={
+                        selectedCategory === category
+                          ? "bg-[#F97316] text-white hover:bg-[#F97316]/90 px-4 py-2 rounded-full cursor-pointer transition-all text-sm font-medium"
+                          : "bg-white text-[#1C1C1E] border-gray-200 px-4 py-2 rounded-full cursor-pointer hover:border-[#F97316] transition-all text-sm font-medium"
+                      }
+                    >
+                      {category}
+                    </Badge>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Category Tabs */}
-      <div className="overflow-x-auto px-4 py-3 sm:py-4 no-scrollbar">
+      {/* Category Tabs - Mobile/Tablet Only */}
+      <div className="lg:hidden overflow-x-auto px-4 py-3 sm:py-4 no-scrollbar">
         <div className="flex gap-2 min-w-max">
           {categories.map((category, index) => (
             <motion.div
@@ -194,7 +226,7 @@ export function MenuScreen({
 
       {/* Menu Grid */}
       <div className="px-4 pb-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-6 max-w-7xl mx-auto">
         <AnimatePresence mode="wait">
           {filteredMenuItems.map((item, index) => (
           <motion.div
@@ -205,10 +237,10 @@ export function MenuScreen({
             transition={{ delay: 0.1 + index * 0.05, duration: 0.3 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => onSelectItem(item)}
-            className="bg-[#1C1C1E] rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="bg-[#1C1C1E] rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
             {/* Circular Image */}
-            <div className="aspect-square p-4 sm:p-6">
+            <div className="aspect-square p-4 sm:p-6 lg:p-4">
               <div className="w-full h-full rounded-full overflow-hidden">
                 <ImageWithFallback
                   src={item.image}
@@ -219,9 +251,9 @@ export function MenuScreen({
             </div>
 
             {/* Card Content */}
-            <div className="px-4 pb-4 sm:px-6">
-              <h3 className="text-white mb-3 text-sm sm:text-base font-medium">{item.name}</h3>
-              <Button className="w-full bg-[#F97316] hover:bg-[#F97316]/90 text-white rounded-full h-9 sm:h-10 text-sm font-medium transition-all duration-200">
+            <div className="px-4 pb-4 sm:px-6 lg:px-4">
+              <h3 className="text-white mb-3 text-sm sm:text-base lg:text-sm font-medium text-center">{item.name}</h3>
+              <Button className="w-full bg-[#F97316] hover:bg-[#F97316]/90 text-white rounded-full h-9 sm:h-10 lg:h-9 text-sm font-medium transition-all duration-200">
                 View &gt;
               </Button>
             </div>
