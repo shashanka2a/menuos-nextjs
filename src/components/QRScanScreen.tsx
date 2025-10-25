@@ -33,7 +33,7 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
           </div>
         </motion.div>
 
-        {/* Animated QR Icon */}
+        {/* Animated QR Code */}
         <motion.div
           animate={{
             scale: [1, 1.05, 1],
@@ -50,15 +50,12 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
           }}
           className="mb-12"
         >
-          <div className="bg-white rounded-3xl p-8 shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300">
-            <a 
-              href="https://halalshack-menuos.vercel.app/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="block"
-            >
-              <QrCode className="w-32 h-32 text-[#F97316] mx-auto" strokeWidth={1.5} />
-            </a>
+          <div className="bg-white rounded-3xl p-8 shadow-lg">
+            <img 
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodeURIComponent('https://halalshack-menuos.vercel.app/')}`}
+              alt="QR Code to MenuOS - Scan with your phone"
+              className="w-32 h-32 mx-auto"
+            />
           </div>
         </motion.div>
 
@@ -82,24 +79,12 @@ export function QRScanScreen({ onContinue }: QRScanScreenProps) {
           No app needed — scan, browse, and order instantly.
         </motion.p>
 
-        {/* URL Display */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-center mb-8"
-        >
-          <p className="text-[#1C1C1E]/50 text-sm mb-2">Visit our digital menu at:</p>
-          <p className="text-[#F97316] font-mono text-sm bg-gray-100 px-3 py-2 rounded-lg">
-            https://halalshack-menuos.vercel.app/
-          </p>
-        </motion.div>
 
         {/* CTA Button */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.4 }}
           className="w-full"
         >
           <Button
